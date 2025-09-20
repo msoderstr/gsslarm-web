@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Grattis!</title>
+  <style>
+    :root {
+      --bg: #0b6623;
+      --line: #ffffff22;
+      --text: #ffffff;
+      --accent: #ffd60a;
+    }
+    * { box-sizing: border-box }
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(var(--line) 2px, transparent 2px) 0 33%/100% 1px,
+        linear-gradient(var(--line) 2px, transparent 2px) 0 66%/100% 1px,
+        radial-gradient(circle 8vmin at 50% 33%, transparent 7.5vmin, var(--line) 7.5vmin 7.8vmin, transparent 7.8vmin),
+        radial-gradient(circle 8vmin at 50% 66%, transparent 7.5vmin, var(--line) 7.5vmin 7.8vmin, transparent 7.8vmin);
+      pointer-events: none;
+      opacity: .4;
+    }
+    .wrap {
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 6vmin;
+      text-align: center;
+    }
+    .card {
+      display: inline-block;
+      padding: clamp(16px, 4vmin, 40px);
+      border-radius: 20px;
+      background: #00000014;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 10px 30px #00000030, inset 0 0 0 2px #ffffff22;
+      max-width: 900px;
+      width: 100%;
+    }
+    .emoji { font-size: clamp(28px, 6vmin, 64px); display: block; }
+    h1 {
+      margin: .2em 0 .1em;
+      font-size: clamp(28px, 8vmin, 72px);
+      line-height: 1.05;
+    }
+    .name {
+      color: var(--accent);
+      font-weight: 800;
+      letter-spacing: .5px;
+    }
+    p {
+      margin: .4em 0 0;
+      font-size: clamp(16px, 3.2vmin, 24px);
+      opacity: .95;
+    }
+    .foot {
+      margin-top: 1.25em;
+      font-size: clamp(13px, 2.6vmin, 16px);
+      opacity: .8;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <main class="card" role="main" aria-live="polite">
+      <span class="emoji" aria-hidden="true">🎉⚽</span>
+      <h1>Grattis på födelsedagen <span class="name" id="name">!</span></h1>
+      <p>Din present: <strong>valfri fotbollsmatch</strong> – biljetter, snacks & dricka ingår. 🏟️</p>
+    </main>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const raw = (params.get('name') || '').trim();
+    const safe = raw.replace(/[^\p{L}\p{N}\s'’.-]/gu, '').slice(0, 40);
+    document.getElementById('name').textContent = safe ? (safe + "!") : "!";
+
+    const color = (params.get('color') || '').replace(/[^0-9a-fA-F]/g, '').slice(0, 6);
+    if (color) document.documentElement.style.setProperty('--accent', '#' + color);
+  </script>
+</body>
+</html>
