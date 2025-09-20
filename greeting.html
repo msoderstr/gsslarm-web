@@ -84,7 +84,7 @@
     const params = new URLSearchParams(location.search);
     const raw = (params.get('name') || '').trim();
     const safe = raw.replace(/[^\p{L}\p{N}\s'’.-]/gu, '').slice(0, 40);
-    document.getElementById('name').textContent = safe ? (safe + "!") : "!";
+    document.getElementById('name').textContent = safe ? (safe) : "";
 
     const color = (params.get('color') || '').replace(/[^0-9a-fA-F]/g, '').slice(0, 6);
     if (color) document.documentElement.style.setProperty('--accent', '#' + color);
